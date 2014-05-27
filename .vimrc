@@ -14,12 +14,9 @@ set is
 set textwidth=70
 " Кодировка
 set encoding=utf8
-" установить шрифт Courier New Cyr
 set guifont=courier_new:h10:cRUSSIAN
-" настраиваю для работы с русскими словами (чтобы w, b, * понимали
-" русские слова)
 set iskeyword=@,48-57,_,192-255
-" табуляция 2 пробела
+" табуляция
 set ts=2
 " отображение выполняемой команды
 set showcmd
@@ -42,9 +39,6 @@ filetype plugin on
 
 imap <c-f> <c-x><c-o>
 map <F2> :w<CR>
-
-
-
 
 function! Auto_complete_string()
 	if pumvisible()
