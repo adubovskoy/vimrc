@@ -1,59 +1,47 @@
-" установить keymap, чтобы по Ctrl+^ переключался на русский и обратно
-set keymap=russian-jcukenwin
-" по умолчанию - латинская раскладка
-set iminsert=0
-" по умолчанию - латинская раскладка при поиске
-set imsearch=0
-" игнорировать регистр при поиске
-set ic
-" подсвечивать поиск
-set hls
-" использовать инкрементальный поиск
-set is
-" ширина текста
-set textwidth=70
-" Кодировка
-set encoding=utf8
-set guifont=courier_new:h10:cRUSSIAN
-set iskeyword=@,48-57,_,192-255
-" табуляция
-set ts=2
-" отображение выполняемой команды
-set showcmd
-" перенос по словам, а не по буквам
-set linebreak
-set dy=lastline
-set directory=~/.vim/tmp/swap
 set number
-" Выключить совместимость с vi
-set nocompatible
+set numberwidth=4
+highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+
+set expandtab
+set tabstop=2
+set shiftwidth=2
 set autoindent
+set smartindent
 
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType scss set omnifunc=csscomplete#CompleteCSS
+call plug#begin('~/.vim/plugged')
+Plug 'othree/csscomplete.vim'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'elzr/vim-json'
+Plug 'pangloss/vim-javascript'
+Plug 'ap/vim-css-color'
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'miripiruni/vim-better-css-indent'
+Plug 'scrooloose/nerdtree'
+call plug#end()
 
-filetype on
-filetype plugin on
 
-imap <c-f> <c-x><c-o>
-map <F2> :w<CR>
+"SCSS
 
-function! Auto_complete_string()
-	if pumvisible()
-		return "\<C-n>"
-	else
-		return "\<C-x>\<C-o>\<C-r>=Auto_complete_opened()\<CR>"
-	end
-endfunction
+au BufRead,BufNewFile *.scss set filetype=scss.css
+autocmd FileType scss set iskeyword+=-
 
-function! Auto_complete_opened()
-	if pumvisible()
-		return "\<Down>"
-	end
-		return ""
-endfunction
 
-inoremap <expr> <Nul> Auto_complete_string()
-inoremap <expr> <C-Space> Auto_complete_string()
+"Drupal file types
+if has("autocmd")
+  " Drupal *.module and *.install files.
+  augroup module
+    autocmd BufRead,BufNewFile *.module set filetype=php
+    autocmd BufRead,BufNewFile *.install set filetype=php
+    autocmd BufRead,BufNewFile *.test set filetype=php
+    autocmd BufRead,BufNewFile *.inc set filetype=php
+    autocmd BufRead,BufNewFile *.profile set filetype=php
+    autocmd BufRead,BufNewFile *.view set filetype=php
+  augroup END
+endif
+syntax on
+
+
+"NerdTree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+map <C-n> :NERDTreeToggle<CR>
