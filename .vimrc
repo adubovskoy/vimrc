@@ -1,4 +1,6 @@
+set nocompatible
 set number
+set scrolloff=3
 set numberwidth=4
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 
@@ -7,23 +9,28 @@ set tabstop=2
 set shiftwidth=2
 set autoindent
 set smartindent
+set ic
+set hls
 
 call plug#begin('~/.vim/plugged')
 Plug 'othree/csscomplete.vim'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'elzr/vim-json'
 Plug 'pangloss/vim-javascript'
-Plug 'ap/vim-css-color'
 Plug 'cakebaker/scss-syntax.vim'
+Plug 'gko/vim-coloresque'
+Plug 'shmargum/vim-sass-colors'
 Plug 'miripiruni/vim-better-css-indent'
 Plug 'scrooloose/nerdtree'
+Plug 'evidens/vim-twig'
 call plug#end()
 
 
-"SCSS
+"SCSS/CSS
 
 au BufRead,BufNewFile *.scss set filetype=scss.css
 autocmd FileType scss set iskeyword+=-
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
 
 
 "Drupal file types
